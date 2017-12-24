@@ -9,13 +9,31 @@ angular.module('newsionic', ['ionic', 'newsionic.controllers', 'ionicLazyLoad'])
     if (window.StatusBar) {
       StatusBar.styleDefault();
     }
-    console.log('is core:' + $ionicPlatform.is('core'));
+    console.log('self url: ' + location.href);
+    console.log('ionic version: ' + ionic.version);
+    console.log('platform: ' + ionic.Platform.platforms);
     console.log('is cordova:' + $ionicPlatform.is('cordova'));
     console.log('is ios:' + $ionicPlatform.is('ios'));
     console.log('is android:' + $ionicPlatform.is('android'));
     console.log('is windows:' + $ionicPlatform.is('windows'));
     console.log('is mobile:' + $ionicPlatform.is('mobile'));
     console.log('is mobileweb:' + $ionicPlatform.is('mobileweb'));
+    console.log('is browser:' + $ionicPlatform.is('browser'));
+
+    console.log('fetch: ' + typeof(fetch));
+    
+    if ($ionicPlatform.is('cordova')) {
+      console.log('cordova is: ' + typeof(cordova));
+      var appVersion = null;
+      cordova.getAppVersion.getVersionNumber().then(function (version) {
+        console.log('app version: ' + version);
+        appVersion = version;
+        return cordova.getAppVersion.getPackageName();
+      }).then(function (package) {
+        console.log('app package name: ' + package);
+        console.log('app version: ' + appVersion);
+      });
+    }
   });
   $ionicPlatform.registerBackButtonAction(function(event) {
     if (true) { // your check here
